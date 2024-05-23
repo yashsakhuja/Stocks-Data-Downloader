@@ -113,8 +113,3 @@ if st.session_state.step == 2:
             clear_sheet(worksheet)
             df_to_gsheet(worksheet, data_as_csv)
             st.success("Data has been written to the Google Sheet successfully!")
-
-# Optionally, reset the session state for a new round of inputs
-st.session_state.step = 1
-st.session_state.tickers = []
-st.session_state.dates = None
