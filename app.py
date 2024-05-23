@@ -33,7 +33,7 @@ sh = client.open(spreadsheetname)
 worksheet = sh.sheet1
 
 # Debug: Check if we have access to the sheet
-st.write("Accessed Spreadsheet:", sh.title,worksheet)
+st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
 # Step 1: User inputs for tickers and dates
 if 'step' not in st.session_state:
