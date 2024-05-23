@@ -37,11 +37,12 @@ st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
 # Function to clear the Google Sheet
 def clear_sheet(worksheet):
-    worksheet.clear()
+    worksheet.values().clear()
 
 # Function to write DataFrame to Google Sheet
 def df_to_gsheet(worksheet, df):
-    worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+    df_values = df.values.tolist()
+            gs.values_append(worksheet, {'valueInputOption': 'RAW'}, {'values': df_values})
 
 
 # Step 1: User inputs for tickers and dates
@@ -111,5 +112,5 @@ if st.session_state.step == 2:
 
         if st.button('Update the Google Sheets',key="gsheets_button"):
             clear_sheet(worksheet)
-            df_to_gsheet(worksheet, data_as_csv)
+            df_to_gsheet(worksheet, final_data)
             st.success("Data has been written to the Google Sheet successfully!")
