@@ -35,6 +35,15 @@ worksheet = sh.sheet1
 # Debug: Check if we have access to the sheet
 st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
+# Function to clear the Google Sheet
+def clear_sheet(worksheet):
+    worksheet.clear()
+
+# Function to write DataFrame to Google Sheet
+def df_to_gsheet(worksheet, df):
+    worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+
+
 # Step 1: User inputs for tickers and dates
 if 'step' not in st.session_state:
     st.session_state.step = 1
@@ -101,17 +110,9 @@ if st.session_state.step == 2:
         st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
         if st.button('Update the Google Sheets',key="gsheets_button"):
-
-            # Clear the sheet before writing new data (If this is intended)
-            worksheet.clear()
-
-            # Convert DataFrame to list of lists, ensuring all values are serializable
-            data_to_insert = [final_data.columns.tolist()] + final_data.astype(str).values.tolist()
-
-            # Update the sheet with new data starting from cell A1
-            worksheet.update('A1', data_to_insert)
-
-            st.success("Data successfully exported to Google Sheets!")
+            clear_sheet(worksheet)
+            df_to_gsheet(worksheet, final_data)
+            st.success("Data has been written to the Google Sheet successfully!")
 
             # Optionally, reset the session state for a new round of inputs
             st.session_state.step = 1
