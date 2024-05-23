@@ -64,7 +64,7 @@ if st.session_state.step == 2:
 
         # Download data for each ticker
         for ticker, start, end in zip(tickers_list, start_dates, end_dates):
-            data = yf.download(ticker, start=start.strftime('%Y-%m-%d'), end=end.strftime('%Y-%m-%d'))
+            data = yf.download(ticker, start=start.strftime('%Y-%m-%d'), end=end.strftime('%Y-%m-%d'), progress=False)
             data['Ticker'] = ticker
             data.reset_index(inplace=True)
             final_data = pd.concat([final_data, data])
