@@ -111,7 +111,7 @@ if st.session_state.step == 2:
 
         if st.button('Update the Google Sheets',key="gsheets_button"):
             clear_sheet(worksheet)
-            df_to_gsheet(worksheet, final_data)
+            df_to_gsheet(worksheet, data_as_csv)
             st.success("Data has been written to the Google Sheet successfully!")
 
             # Optionally, reset the session state for a new round of inputs
