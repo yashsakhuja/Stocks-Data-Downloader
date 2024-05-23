@@ -19,7 +19,7 @@ st.caption('Using Yahoo Finance API')
 # Create the Google Sheets authentication scope
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
             
-credentials = service_account.Credentials.from_service_account_info(st.secrets['gcp_service_account'], scopes=scope)
+credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
 
 client = Client(scope=scope, creds=credentials)
 
