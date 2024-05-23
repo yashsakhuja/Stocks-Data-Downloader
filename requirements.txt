@@ -8,12 +8,15 @@ certifi==2024.2.2
 charset-normalizer==3.3.2
 click==8.1.7
 decorator==5.1.1
+duckdb==0.10.3
 frozendict==2.4.4
 gitdb==4.0.11
 GitPython==3.1.43
 google-auth==2.29.0
 google-auth-oauthlib==1.2.0
 gspread==5.12.4
+gspread-dataframe==3.3.1
+gspread-formatting==1.1.2
 gspread-pandas==3.3.0
 html5lib==1.1
 idna==3.7
@@ -28,7 +31,7 @@ multitasking==0.0.11
 numpy==1.26.4
 oauthlib==3.2.2
 packaging==24.0
-pandas==2.2.2
+pandas==1.5.3
 peewee==3.17.5
 pillow==10.3.0
 platformdirs==4.2.2
@@ -49,6 +52,10 @@ rsa==4.9
 six==1.16.0
 smmap==5.0.1
 soupsieve==2.5
+sql_metadata==2.11.0
+sqlparse==0.5.0
+st-gsheets-connection==0.0.4
+streamlit_gsheets
 streamlit==1.35.0
 tenacity==8.3.0
 toml==0.10.2
@@ -57,5 +64,6 @@ tornado==6.4
 typing_extensions==4.11.0
 tzdata==2024.1
 urllib3==2.2.1
+validators==0.28.1
 webencodings==0.5.1
 yfinance==0.2.40
