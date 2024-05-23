@@ -15,6 +15,7 @@ st.set_page_config(layout="wide")
 st.title("💵 💹 Stocks Data Downloader")
 st.caption('Using Yahoo Finance API')
 
+conn = st.connection("gsheets", type=GSheetsConnection)
 
 
 # Step 1: User inputs for tickers and dates
