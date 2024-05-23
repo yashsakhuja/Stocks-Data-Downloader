@@ -41,8 +41,7 @@ def clear_sheet(worksheet):
 
 # Function to write DataFrame to Google Sheet
 def df_to_gsheet(worksheet, df):
-    df_values = df.values.tolist()
-            sh.values_append(worksheet, {'valueInputOption': 'RAW'}, {'values': df_values})
+    worksheet.update([df.columns.values.tolist()] + df.values.tolist())
 
 
 # Step 1: User inputs for tickers and dates
