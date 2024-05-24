@@ -100,14 +100,14 @@ if st.session_state.step == 3:
 
     # Input field for password
     update_key = st.text_input("Enter Update Key to Proceed", type="password")
-    correct_key = "912001"  # Replace this with your actual update key
+    correct_key = st.secrets['update_key']  # Replace this with your actual update key
 
     if st.button('Update the Google Sheets', key="gsheets_button"):
         if update_key == correct_key:
             # Create the Google Sheets authentication scope
             scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-            credentials = service_account.Credentials.from_service_account_info(st.secrets, scopes=scope)
+            credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
 
             client = Client(scope=scope, creds=credentials)
 
