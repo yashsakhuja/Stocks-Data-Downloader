@@ -8,7 +8,7 @@ import yfinance as yf
 import pandas as pd
 from google.oauth2 import service_account
 import gspread
-from gspread_pandas import Spread,Client
+from gspread_pandas import Spread, Client
 
 # Streamlit page configuration
 st.set_page_config(layout="wide")
@@ -98,32 +98,39 @@ if st.session_state.step == 3:
     # Download CSV
     st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
+    # Input field for password
+    update_key = st.text_input("Enter Update Key to Proceed", type="password")
+    correct_key = "912001"  # Replace this with your actual update key
+
     if st.button('Update the Google Sheets', key="gsheets_button"):
-        # Create the Google Sheets authentication scope
-        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        if update_key == correct_key:
+            # Create the Google Sheets authentication scope
+            scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-        credentials=service_account.Credentials.from_service_account_info(st.secrets,scopes=scope)
+            credentials = service_account.Credentials.from_service_account_info(st.secrets, scopes=scope)
 
-        client= Client(scope=scope,creds=credentials)
+            client = Client(scope=scope, creds=credentials)
 
-        spreadsheetname="YFinance Data"
-        spread=Spread(spreadsheetname,client=client)
+            spreadsheetname = "YFinance Data"
+            spread = Spread(spreadsheetname, client=client)
 
-        st.write(spread.url)
+            st.write(spread.url)
 
-        #Call our spreadsheet
-        sh=client.open(spreadsheetname)
+            # Call our spreadsheet
+            sh = client.open(spreadsheetname)
 
-        # Select the "Live Match" worksheet
-        worksheet = sh.worksheet('Data')
+            # Select the "Live Match" worksheet
+            worksheet = sh.worksheet('Data')
 
-        # Clear the worksheet
-        worksheet.clear()
+            # Clear the worksheet
+            worksheet.clear()
 
-        # Update the worksheet with new data
-        worksheet.update([st.session_state.final_data.columns.values.tolist()] + st.session_state.final_data.values.tolist())
+            # Update the worksheet with new data
+            worksheet.update([st.session_state.final_data.columns.values.tolist()] + st.session_state.final_data.values.tolist())
 
-        st.success('Google Sheets Updated!!')
+            st.success('Google Sheets Updated!!')
+        else:
+            st.error("Invalid Update Key. Please try again.")
 
     # Button to reset the session state
     if st.button("Start Over"):
