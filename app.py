@@ -100,7 +100,7 @@ if st.session_state.step == 3:
 
     # Input field for password
     update_key = st.text_input("Enter Update Key to Proceed", type="password")
-    correct_key = st.secrets['update_key']  # Replace this with your actual update key
+    correct_key = st.secrets['update_key']['gsheets_key']  # Replace this with your actual update key
 
     if st.button('Update the Google Sheets', key="gsheets_button"):
         if update_key == correct_key:
