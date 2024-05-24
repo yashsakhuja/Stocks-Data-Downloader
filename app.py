@@ -88,32 +88,14 @@ if st.session_state.step == 3:
     st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
     if st.button('Update the Google Sheets', key="gsheets_button"):
-                        
-        #Authenticate and initialize the gspread client
-        #Create the Google Sheets authentication scope
-        #scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-            
-        #credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
-            
-        #client = Client(scope=scope, creds=credentials)
-            
-        #spreadsheetname = "YFinance Data"
-        #spread = Spread(spreadsheetname, client=client)
-            
-        #Call our spreadsheet
-        #sh = client.open(spreadsheetname)
-            
-        #Get the first sheet of the spreadsheet
-        #worksheet = sh.sheet1
-
-        # Debug: Check if we have access to the sheet
-        #st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
-
-        #sh.worksheet.clear()
-            
-        #worksheet.update([final_data.columns.values.tolist()] + final_data.values.tolist())
+        
         conn = st.connection("gsheets", type=GSheetsConnection)
         conn.clear(worksheet="Data")
         conn.update(worksheet="Data", data=st.session_state.final_data)
         
         st.balloons()
+
+        st.session_state.step = 1
+        st.session_state.tickers = []
+        st.session_state.dates = None
+        st.session_state.final_data = None
