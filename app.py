@@ -109,14 +109,8 @@ if st.session_state.step == 3:
         # Debug: Check if we have access to the sheet
         st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
-        # Function to clear the Google Sheet
-        def clear_sheet(worksheet):
-            worksheet.values().clear()
+        worksheet.values().clear()
             
-        # Function to write DataFrame to Google Sheet
-        def df_to_gsheet(worksheet, df):
-            worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+        worksheet.update([final_data.columns.values.tolist()] + final_data.values.tolist())
 
-           
-        clear_sheet(worksheet)
-        df_to_gsheet(worksheet, final_data)
+        st.ball0ons()
