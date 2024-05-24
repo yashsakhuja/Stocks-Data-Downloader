@@ -109,7 +109,7 @@ if st.session_state.step == 3:
         # Debug: Check if we have access to the sheet
         st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
-        worksheet.values().clear()
+        sh.worksheet.clear()
             
         worksheet.update([final_data.columns.values.tolist()] + final_data.values.tolist())
 
