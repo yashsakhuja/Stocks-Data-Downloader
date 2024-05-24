@@ -114,6 +114,6 @@ if st.session_state.step == 3:
         #worksheet.update([final_data.columns.values.tolist()] + final_data.values.tolist())
         conn = st.connection("gsheets", type=GSheetsConnection)
         conn.clear(worksheet="Data")
-        conn.update(worksheet="Data", data=final_data)
+        conn.update(worksheet="Data", data=st.session_state.final_data)
         
         st.balloons()
