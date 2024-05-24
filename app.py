@@ -16,6 +16,9 @@ st.set_page_config(layout="wide")
 st.title("💵 💹 Stocks Data Downloader")
 st.caption('Using Yahoo Finance API')
 
+conn = st.connection("gsheets", type=GSheetsConnection)
+df=conn.read(worksheet="Sheet1")
+conn.clear(worksheet="Sheet1)
 
 # Step 1: User inputs for tickers and dates
 if 'step' not in st.session_state:
