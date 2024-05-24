@@ -8,7 +8,7 @@ import yfinance as yf
 import pandas as pd
 from google.oauth2.service_account import Credentials
 import gspread
-from gspread_pandas import Spread
+from gspread_pandas import Spread,Client
 
 # Streamlit page configuration
 st.set_page_config(layout="wide")
@@ -99,21 +99,23 @@ if st.session_state.step == 3:
     st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
     if st.button('Update the Google Sheets', key="gsheets_button"):
-        # Path to your service account key file
-        #SERVICE_ACCOUNT_FILE = 'yfinance_key.json'
+        # Create the Google Sheets authentication scope
+        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-        # Define the scope
-        SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
+        credentials=service_account.Credentials.from_service_account_info(st.secrets,scopes=scope)
 
-        # Authenticate using the service account
-        credentials = Credentials.from_service_account_file(st.secrets, scopes=SCOPES)
-        client = gspread.authorize(credentials)
-        
-        # Open your spreadsheet
-        spreadsheet = client.open('YFinance Data')
+        client= Client(scope=scope,creds=credentials)
 
-        # Select the worksheet you want to clear and update
-        worksheet = spreadsheet.worksheet('Data')
+        spreadsheetname="YFinance Data"
+        spread=Spread(spreadsheetname,client=client)
+
+        st.write(spread.url)
+
+        #Call our spreadsheet
+        sh=client.open(spreadsheetname)
+
+        # Select the "Live Match" worksheet
+        worksheet = sh.worksheet('Data')
 
         # Clear the worksheet
         worksheet.clear()
