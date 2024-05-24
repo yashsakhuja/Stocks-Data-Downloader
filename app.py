@@ -116,8 +116,4 @@ if st.session_state.step == 2:
             #clear_sheet(worksheet)
             #df_to_gsheet(worksheet, final_data)
             
-            conn = st.connection("gsheets", type=GSheetsConnection)
-            df = conn.read(worksheet="Sheet1")
-
-            st.dataframe(df)
             st.success("Data has been written to the Google Sheet successfully!")
