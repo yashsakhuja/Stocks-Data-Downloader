@@ -91,26 +91,29 @@ if st.session_state.step == 3:
                         
         #Authenticate and initialize the gspread client
         #Create the Google Sheets authentication scope
-        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        #scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
             
-        credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
+        #credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
             
-        client = Client(scope=scope, creds=credentials)
+        #client = Client(scope=scope, creds=credentials)
             
-        spreadsheetname = "YFinance Data"
-        spread = Spread(spreadsheetname, client=client)
+        #spreadsheetname = "YFinance Data"
+        #spread = Spread(spreadsheetname, client=client)
             
         #Call our spreadsheet
-        sh = client.open(spreadsheetname)
+        #sh = client.open(spreadsheetname)
             
         #Get the first sheet of the spreadsheet
-        worksheet = sh.sheet1
+        #worksheet = sh.sheet1
 
         # Debug: Check if we have access to the sheet
-        st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
+        #st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
-        sh.worksheet.clear()
+        #sh.worksheet.clear()
             
-        worksheet.update([final_data.columns.values.tolist()] + final_data.values.tolist())
-
-        st.ball0ons()
+        #worksheet.update([final_data.columns.values.tolist()] + final_data.values.tolist())
+        conn = st.connection("gsheets", type=GSheetsConnection)
+        conn.clear(worksheet="Data")
+        conn.update(worksheet="Data", data=final_data)
+        
+        st.balloons()
