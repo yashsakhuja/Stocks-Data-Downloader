@@ -16,9 +16,9 @@ st.set_page_config(layout="wide")
 st.title("💵 💹 Stocks Data Downloader")
 st.caption('Using Yahoo Finance API')
 
-conn = st.connection("gsheets", type=GSheetsConnection)
-df=conn.read(worksheet="Sheet1")
-st.dataframe(df)
+#conn = st.connection("gsheets", type=GSheetsConnection)
+#df=conn.read(worksheet="Sheet1")
+
 
 # Step 1: User inputs for tickers and dates
 if 'step' not in st.session_state:
@@ -86,6 +86,7 @@ if st.session_state.step == 2:
         st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
         if st.button('Update the Google Sheets'):
+            st.success("Data has been written to the Google Sheet successfully!")
                         
             # Authenticate and initialize the gspread client
             # Create the Google Sheets authentication scope
@@ -119,4 +120,4 @@ if st.session_state.step == 2:
             #clear_sheet(worksheet)
             #df_to_gsheet(worksheet, final_data)
             
-            st.success("Data has been written to the Google Sheet successfully!")
+            
