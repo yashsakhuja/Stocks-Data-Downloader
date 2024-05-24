@@ -84,37 +84,38 @@ if st.session_state.step == 2:
         # Download CSV
         st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
-        if st.button('Update the Google Sheets',key="gsheets_button"):
+        if st.button('Update the Google Sheets'):
                         
             # Authenticate and initialize the gspread client
             # Create the Google Sheets authentication scope
-            scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+            #scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
             
-            credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
+            #credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
             
-            client = Client(scope=scope, creds=credentials)
+            #client = Client(scope=scope, creds=credentials)
             
-            spreadsheetname = "YFinance Data"
-            spread = Spread(spreadsheetname, client=client)
+            #spreadsheetname = "YFinance Data"
+            #spread = Spread(spreadsheetname, client=client)
             
             # Call our spreadsheet
-            sh = client.open(spreadsheetname)
+            #sh = client.open(spreadsheetname)
             
             # Get the first sheet of the spreadsheet
-            worksheet = sh.sheet1
+            #worksheet = sh.sheet1
 
             # Debug: Check if we have access to the sheet
-            st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
+            #st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
             # Function to clear the Google Sheet
-            def clear_sheet(worksheet):
-                worksheet.values().clear()
+            #def clear_sheet(worksheet):
+             #   worksheet.values().clear()
             
             # Function to write DataFrame to Google Sheet
-            def df_to_gsheet(worksheet, df):
-                worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+            #def df_to_gsheet(worksheet, df):
+             #   worksheet.update([df.columns.values.tolist()] + df.values.tolist())
 
            
-            clear_sheet(worksheet)
-            df_to_gsheet(worksheet, final_data)
+            #clear_sheet(worksheet)
+            #df_to_gsheet(worksheet, final_data)
+            conn.clear(worksheet="Sheet1")
             st.success("Data has been written to the Google Sheet successfully!")
