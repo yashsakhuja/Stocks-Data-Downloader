@@ -6,9 +6,9 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 import yfinance as yf
 import pandas as pd
-from gspread_pandas import Spread, Client
-from google.oauth2 import service_account
-from streamlit_gsheets import GSheetsConnection
+from google.oauth2.service_account import Credentials
+import gspread
+from gspread_pandas import Spread
 
 # Streamlit page configuration
 st.set_page_config(layout="wide")
@@ -63,7 +63,7 @@ if st.session_state.step == 2:
     if st.button('Prepare Data'):
         # Store edited dates back to session state
         st.session_state.dates = edited_dates
-        
+
         tickers_list = edited_dates['Ticker'].tolist()
         start_dates = edited_dates['Start Date'].tolist()
         end_dates = edited_dates['End Date'].tolist()
@@ -81,6 +81,9 @@ if st.session_state.step == 2:
         # Extract the 'Close' prices
         final_data = final_data[['Date', 'Ticker', 'Close']]
 
+        # Convert Timestamp to string to avoid JSON serialization issues
+        final_data['Date'] = final_data['Date'].astype(str)
+
         # Display the transformed data
         st.dataframe(final_data)
 
@@ -96,11 +99,28 @@ if st.session_state.step == 3:
     st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
     if st.button('Update the Google Sheets', key="gsheets_button"):
+        # Path to your service account key file
+        #SERVICE_ACCOUNT_FILE = 'yfinance_key.json'
+
+        # Define the scope
+        SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
+
+        # Authenticate using the service account
+        credentials = Credentials.from_service_account_file(st.secrets, scopes=SCOPES)
+        client = gspread.authorize(credentials)
         
-        conn = st.connection("gsheets", type=GSheetsConnection)
-        conn.clear(worksheet="Data")
-        conn.update(worksheet="Data", data=st.session_state.final_data)
-        
+        # Open your spreadsheet
+        spreadsheet = client.open('YFinance Data')
+
+        # Select the worksheet you want to clear and update
+        worksheet = spreadsheet.worksheet('Data')
+
+        # Clear the worksheet
+        worksheet.clear()
+
+        # Update the worksheet with new data
+        worksheet.update([st.session_state.final_data.columns.values.tolist()] + st.session_state.final_data.values.tolist())
+
         st.balloons()
 
     # Button to reset the session state
