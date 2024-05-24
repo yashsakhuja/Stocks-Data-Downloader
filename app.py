@@ -17,7 +17,6 @@ st.title("💵 💹 Stocks Data Downloader")
 st.caption('Using Yahoo Finance API')
 
 conn = st.connection("gsheets", type=GSheetsConnection)
-st.write(conn)
 
 # Step 1: User inputs for tickers and dates
 if 'step' not in st.session_state:
