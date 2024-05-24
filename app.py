@@ -111,7 +111,7 @@ if st.session_state.step == 3:
 
         # Function to clear the Google Sheet
         def clear_sheet(worksheet):
-            worksheet.values().clear()
+            worksheet.clear()
             
         # Function to write DataFrame to Google Sheet
         def df_to_gsheet(worksheet, df):
