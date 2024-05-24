@@ -16,10 +16,18 @@ st.set_page_config(layout="wide")
 st.title("💵 💹 Stocks Data Downloader")
 st.caption('Using Yahoo Finance API')
 
-# Step 1: User inputs for tickers and dates
-if 'step' not in st.session_state:
+# Initialize or reset session state
+def initialize_session_state():
     st.session_state.step = 1
+    st.session_state.tickers = []
+    st.session_state.dates = None
+    st.session_state.final_data = None
 
+# Check if session state is already initialized, if not initialize it
+if 'step' not in st.session_state:
+    initialize_session_state()
+
+# Step 1: User inputs for tickers and dates
 if st.session_state.step == 1:
     # Input for comma-separated stock tickers
     tickers_input = st.text_area("Enter Comma Separated Stock Tickers", value="LICI.NS, INFY.NS, HDFCBANK.NS, WIPRO.NS, TATAMOTORS.NS, BHARTIARTL.BO, TCS.NS")
@@ -95,7 +103,7 @@ if st.session_state.step == 3:
         
         st.balloons()
 
-        st.session_state.step = 1
-        st.session_state.tickers = []
-        st.session_state.dates = None
-        st.session_state.final_data = None
+    # Button to reset the session state
+    if st.button("Start Over"):
+        initialize_session_state()
+        st.experimental_rerun()
