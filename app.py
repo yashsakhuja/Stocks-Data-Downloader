@@ -8,6 +8,7 @@ import yfinance as yf
 import pandas as pd
 from gspread_pandas import Spread, Client
 from google.oauth2 import service_account
+from streamlit_gsheets import GSheetsConnection
 
 # Streamlit page configuration
 st.set_page_config(layout="wide")
