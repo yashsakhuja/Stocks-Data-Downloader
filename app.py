@@ -90,6 +90,8 @@ if st.session_state.step == 2:
         st.session_state.final_data = final_data
         st.session_state.step = 3
 
+st.divider()
+
 # Step 3: Provide options to download data or update Google Sheets
 if st.session_state.step == 3:
     # CSV Conversion of dataframe
