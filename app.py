@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 import yfinance as yf
 import pandas as pd
 from google.oauth2.service_account import Credentials
+from google.oauth2 import service_account
 import gspread
 from gspread_pandas import Spread,Client
 
