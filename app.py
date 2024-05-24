@@ -88,7 +88,6 @@ if st.session_state.step == 3:
     st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
     if st.button('Update the Google Sheets', key="gsheets_button"):
-        st.success("Data has been written to the Google Sheet successfully!")
                         
         #Authenticate and initialize the gspread client
         #Create the Google Sheets authentication scope
@@ -110,14 +109,14 @@ if st.session_state.step == 3:
         # Debug: Check if we have access to the sheet
         st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
-            # Function to clear the Google Sheet
-            #def clear_sheet(worksheet):
-             #   worksheet.values().clear()
+        # Function to clear the Google Sheet
+        def clear_sheet(worksheet):
+            worksheet.values().clear()
             
-            # Function to write DataFrame to Google Sheet
-            #def df_to_gsheet(worksheet, df):
-             #   worksheet.update([df.columns.values.tolist()] + df.values.tolist())
+        # Function to write DataFrame to Google Sheet
+        def df_to_gsheet(worksheet, df):
+            worksheet.update([df.columns.values.tolist()] + df.values.tolist())
 
            
-            #clear_sheet(worksheet)
-            #df_to_gsheet(worksheet, final_data)
+        clear_sheet(worksheet)
+        df_to_gsheet(worksheet, final_data)
