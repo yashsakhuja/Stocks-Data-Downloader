@@ -16,17 +16,13 @@ st.set_page_config(layout="wide")
 st.title("💵 💹 Stocks Data Downloader")
 st.caption('Using Yahoo Finance API')
 
-#conn = st.connection("gsheets", type=GSheetsConnection)
-#df=conn.read(worksheet="Sheet1")
-
-
 # Step 1: User inputs for tickers and dates
 if 'step' not in st.session_state:
     st.session_state.step = 1
 
 if st.session_state.step == 1:
     # Input for comma-separated stock tickers
-    tickers_input = st.text_area("Enter Comma Separated Stock Tickers", value="'LICI.NS', 'INFY.NS', 'HDFCBANK.NS','WIPRO.NS','TATAMOTORS.NS','BHARTIARTL.BO','TCS.NS'")
+    tickers_input = st.text_area("Enter Comma Separated Stock Tickers", value="LICI.NS, INFY.NS, HDFCBANK.NS, WIPRO.NS, TATAMOTORS.NS, BHARTIARTL.BO, TCS.NS")
 
     # Input for end date, defaulting to today
     end_date = st.date_input("Enter Latest Date", value=date.today())
@@ -42,7 +38,7 @@ if st.session_state.step == 1:
 
     # Submit button for step 1
     if st.button('Submit'):
-        st.session_state.tickers = [ticker.strip("' ") for ticker in tickers_input.split(",")]
+        st.session_state.tickers = [ticker.strip() for ticker in tickers_input.split(",")]
         st.session_state.dates = pd.DataFrame({
             'Ticker': st.session_state.tickers,
             'Start Date': [start_date] * len(st.session_state.tickers),
@@ -80,33 +76,39 @@ if st.session_state.step == 2:
         # Display the transformed data
         st.dataframe(final_data)
 
-        # CSV Conversion of dataframe
-        data_as_csv = final_data.to_csv(index=False).encode("utf-8")
-        # Download CSV
-        st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
+        st.session_state.final_data = final_data
+        st.session_state.step = 3
 
-        if st.button('Update the Google Sheets'):
-            st.success("Data has been written to the Google Sheet successfully!")
+# Step 3: Provide options to download data or update Google Sheets
+if st.session_state.step == 3:
+    # CSV Conversion of dataframe
+    data_as_csv = st.session_state.final_data.to_csv(index=False).encode("utf-8")
+
+    # Download CSV
+    st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
+
+    if st.button('Update the Google Sheets', key="gsheets_button"):
+        st.success("Data has been written to the Google Sheet successfully!")
                         
-            # Authenticate and initialize the gspread client
-            # Create the Google Sheets authentication scope
-            #scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        #Authenticate and initialize the gspread client
+        #Create the Google Sheets authentication scope
+        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
             
-            #credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
+        credentials = service_account.Credentials.from_service_account_info(st.secrets['service_account'], scopes=scope)
             
-            #client = Client(scope=scope, creds=credentials)
+        client = Client(scope=scope, creds=credentials)
             
-            #spreadsheetname = "YFinance Data"
-            #spread = Spread(spreadsheetname, client=client)
+        spreadsheetname = "YFinance Data"
+        spread = Spread(spreadsheetname, client=client)
             
-            # Call our spreadsheet
-            #sh = client.open(spreadsheetname)
+        #Call our spreadsheet
+        sh = client.open(spreadsheetname)
             
-            # Get the first sheet of the spreadsheet
-            #worksheet = sh.sheet1
+        #Get the first sheet of the spreadsheet
+        worksheet = sh.sheet1
 
-            # Debug: Check if we have access to the sheet
-            #st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
+        # Debug: Check if we have access to the sheet
+        st.write("Accessed Spreadsheet:", sh.title,worksheet.title)
 
             # Function to clear the Google Sheet
             #def clear_sheet(worksheet):
@@ -119,5 +121,3 @@ if st.session_state.step == 2:
            
             #clear_sheet(worksheet)
             #df_to_gsheet(worksheet, final_data)
-            
-            
