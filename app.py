@@ -123,7 +123,7 @@ if st.session_state.step == 3:
         # Update the worksheet with new data
         worksheet.update([st.session_state.final_data.columns.values.tolist()] + st.session_state.final_data.values.tolist())
 
-        st.balloons()
+        st.success("Google Sheets Updated!!)
 
     # Button to reset the session state
     if st.button("Start Over"):
