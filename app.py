@@ -99,6 +99,7 @@ if st.session_state.step == 3:
     st.download_button("Download Data", data_as_csv, "yfinance_data.csv", "text/csv", key='download-csv')
 
     # Input field for password
+    st.write("You can Downlaod the Data as a CSV File but not all can update the GSheets to avoid the chaos!!)
     update_key = st.text_input("Enter Update Key to Proceed", type="password")
     correct_key = st.secrets['update_key']['gsheets_key']  # Replace this with your actual update key
 
@@ -136,3 +137,5 @@ if st.session_state.step == 3:
     if st.button("Start Over"):
         initialize_session_state()
         st.experimental_rerun()
+
+    st.caption("Any Questions. Reach out to me yash-sakhuja on Linkedin")
