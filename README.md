@@ -11,7 +11,7 @@ Link to YFinance API getting started Blog Post: https://sakhujayashofficia.wixsi
 ## Features
 <li><b>Easy Data Collection:</b> Leveraging the YFinance API with minimal code.</li>
 <li><b>Dynamic Interface:</b> User-friendly interface for quick data downloads or Google Sheets updates.</li>
-<li><b>Flexible Parameters:</b> Specify stock tickers, date range, and exchange suffixes.</li>
+<li><b>Flexible Parameters:</b> Specify stock tickers and date ranges.</li>
 <li><b>Wide to Long Format:</b> Transforms data for easy analysis.</li>
 
 
