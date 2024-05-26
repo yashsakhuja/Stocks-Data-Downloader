@@ -16,7 +16,6 @@ Link to YFinance API getting started Blog Post: https://sakhujayashofficia.wixsi
 
 
 ## Usage
-<li> Clone the repo and install dependencies. </li>
 <li>Run the Streamlit app.</li>
 <li>Enter stock tickers and date range.</li>
 <li>Click "Download CSV"
