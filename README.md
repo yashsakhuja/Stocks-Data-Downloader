@@ -23,7 +23,7 @@ Link to yfinance API Documentation: https://pypi.org/project/yfinance/
 
 
 ## Feedback
-Reach out with any feedback, suggestions, or questions! Your input helps improve this project.
+Reach out with any feedback, suggestions, or questions!
 
 
 Repository by: Yash Sakhuja
