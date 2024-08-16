@@ -4,6 +4,9 @@ This repository hosts a dynamic Streamlit application for downloading historical
 
 Link to Streamlit App: https://stocks-data-downloader.streamlit.app/
 
+<img width="1312" alt="Screenshot 2024-08-16 at 18 47 43" src="https://github.com/user-attachments/assets/91311b8d-bf52-4f4f-8a73-3d2ed40eb114">
+
+
 Link to yfinance API getting started Blog Post: https://sakhujayashofficia.wixsite.com/yashsakhuja/post/accessing-finance-data-on-the-go-with-yfinance-api-and-python
 
 Link to yfinance API Documentation: https://pypi.org/project/yfinance/
